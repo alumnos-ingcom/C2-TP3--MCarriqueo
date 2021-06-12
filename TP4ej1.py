@@ -12,7 +12,7 @@ def ingreso_entero(mensaje):
     try:
         entero = int(ingreso)
     except ValueError as err:
-        raise IngresoIncorrecto("no es un número entero") from err        
+        raise IngresoIncorrecto("No era un número!") from err
     return entero
 
 def ingreso_entero_reintento(mensaje, cantidad_reintentos=5):
@@ -23,10 +23,11 @@ def ingreso_entero_reintento(mensaje, cantidad_reintentos=5):
         try:
             valor = ingreso_entero(mensaje)
             return valor
-        except IngresoIncorrecto as error:
+        except IngresoIncorrecto as err:
             cantidad_reintentos = cantidad_reintentos -1
-            print(f'Te quedan {cantidad_reintentos}')
+            print(f'Te quedan {cantidad_reintentos} intentos' )
     raise IngresoIncorrecto("Te quedaste sin intentos")
+
 
 def ingreso_entero_restringido(mensaje, valor_minimo=0, valor_maximo=10):
     """
@@ -34,20 +35,38 @@ def ingreso_entero_restringido(mensaje, valor_minimo=0, valor_maximo=10):
     """
     while ingreso_entero:
         try:
-            valor = ingreso_entero(mensaje) 
-            return valor
-        except IngresoIncorrecto as err:
-            valor_minimo =0
-            valor_maximo = 10
-            print(f' valor fuera de rango, volver a ingresar nuevo número')
-        raise IngresoIncorrecto("valor correcto")
-    
-    
+            valor = ingreso_entero(mensaje)
+            if  valor > valor_minimo and valor < valor_maximo:
+                return valor
+        except ValueError as err:
+            raise IngresoIncorrecto("Valor fuera de rango") from err
+        return IngresoIncorrecto("Valor fuera de rango")
+            
+           
+       
+       
+class IngresoIncorrecto(Exception):
+    """Esta es la excepcion para el ingreso incorrecto de un numero"""
+    pass
 
 def prueba():
     print (f' Ingreso valor entero')
-    valor = ingreso_entero_restringido('Ingrese un número entero')
+    valor = ingreso_entero('Ingrese un número entero')
     print(f'El valor ingresado fue {valor}')
 
+
+def prueba1():
+    print (f' Ingreso valor entero')
+    valor = ingreso_entero_reintento('Ingrese un número entero')
+    print(f'El valor ingresado fue {valor}')
+    
+    
+def prueba2():
+    valor = ingreso_entero_restringido('Ingrese un número entero')
+    print(f'El valor ingresado fue {valor}')
+    
+    
+    
 if __name__ == "__main__":
-     prueba()
+    prueba2()
+     
