@@ -14,7 +14,8 @@ def division_lenta(dividendo, divisor):
     while dividendo>=divisor:
         dividendo = dividendo - divisor
         contador = contador + 1
-    return contador
+        resto = dividendo
+    return (contador, resto)
 
 def prueba():
     dividendo = ingreso_entero('Ingrese el dividendo')
